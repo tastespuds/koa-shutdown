@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 const http = require('http')
 
 beforeEach(() => {
@@ -28,7 +30,7 @@ describe('module', () => {
   describe('createShutdownMiddleware', () => {
     it('attaches to process signals SIGINT and SIGTERM', () => {
       const server = http.createServer()
-      const middleware = createMiddleware(server)
+      createMiddleware(server)
       expect(global.process.on.mock.calls.length).toBe(2)
       expect(global.process.on.mock.calls[0][0]).toBe('SIGINT')
       expect(global.process.on.mock.calls[1][0]).toBe('SIGTERM')
@@ -36,7 +38,7 @@ describe('module', () => {
 
     it('adds more signals via additionalSignals', () => {
       const server = http.createServer()
-      const middleware = createMiddleware(server, {
+      createMiddleware(server, {
         additionalSignals: ['SIGUSR2']
       })
 
@@ -76,12 +78,10 @@ describe('module', () => {
     })
 
     it('closes process if server takes too long', async () => {
-      const ctx = { set: jest.fn() }
-      const next = jest.fn()
       const server = http.createServer()
       server.close = jest.fn()
 
-      const middleware = createMiddleware(server)
+      createMiddleware(server)
 
       await global.process.on.mock.calls[0][1]()
 
@@ -94,12 +94,10 @@ describe('module', () => {
     })
 
     it('closes process if server has closed', async () => {
-      const ctx = { set: jest.fn() }
-      const next = jest.fn()
       const server = http.createServer()
       server.close = jest.fn()
 
-      const middleware = createMiddleware(server)
+      createMiddleware(server)
 
       await global.process.on.mock.calls[0][1]()
       server.close.mock.calls[0][0]()
@@ -109,12 +107,10 @@ describe('module', () => {
     })
 
     it('uses forceTimeout when provided', async () => {
-      const ctx = { set: jest.fn() }
-      const next = jest.fn()
       const server = http.createServer()
       server.close = jest.fn()
 
-      const middleware = createMiddleware(server, {
+      createMiddleware(server, {
         forceTimeout: 123456
       })
 
@@ -125,13 +121,11 @@ describe('module', () => {
     })
 
     it('uses onShutdown when provided', async () => {
-      const ctx = { set: jest.fn() }
-      const next = jest.fn()
       const server = http.createServer()
       server.close = jest.fn()
 
       const onShutdown = jest.fn().mockResolvedValue()
-      const middleware = createMiddleware(server, {
+      createMiddleware(server, {
         onShutdown
       })
 

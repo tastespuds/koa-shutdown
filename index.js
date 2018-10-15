@@ -18,7 +18,7 @@ const defaultOptions = {
  * @param {string[]} [options.additionalSignals] - Signals to detect when shutting down.
  * @return {function} The created shutdown middleware
  */
-function createShutdownMiddleware(server, options) {
+function createShutdownMiddleware (server, options) {
   const {
     logger,
     onShutdown,
@@ -56,7 +56,7 @@ function createShutdownMiddleware(server, options) {
     process.on(signal, () => gracefulShutdown(signal))
   })
 
-  return async function shutdownMiddleware(ctx, next) {
+  return async function shutdownMiddleware (ctx, next) {
     if (!shuttingDown) {
       await next()
       return
