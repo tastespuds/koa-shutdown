@@ -1,0 +1,20 @@
+{
+  "name": "@tastespuds/koa-shutdown",
+  "version": "1.0.0",
+  "description": "Koa middleware that gracefully shuts down the server",
+  "main": "index.js",
+  "author": "Jan Karlo Dela Cruz",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "engines": {
+    "node": ">=10.0"
+  },
+  "peerDependencies": {
+    "koa": "2.x.x"
+  },
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}
